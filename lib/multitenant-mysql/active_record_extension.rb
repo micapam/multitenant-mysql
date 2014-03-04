@@ -11,7 +11,7 @@ ActiveRecord::Base.class_eval do
           connection.execute "GRANT ALL PRIVILEGES ON *.* TO '#{tenant_name}'@'localhost' IDENTIFIED BY '#{password}' WITH GRANT OPTION;"
           connection.execute 'flush privileges;'
         rescue ActiveRecord::StatementInvalid
-          puts "WARNING: could not create MySQL user for tenant: #{tenant_name}"
+          puts "WARNING [multitenant-mysql]: could not create MySQL user for tenant: #{tenant_name}"
         end
       end
     end

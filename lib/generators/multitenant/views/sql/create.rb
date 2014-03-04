@@ -22,11 +22,12 @@ module Multitenant
             )
 
             if Multitenant::Mysql.configs.bucket.has_super_tenant_identifier?
-              #puts "YES IT HAS SUPER TENANT"
-              view_sql += "WHERE IF(SUBSTRING_INDEX(USER(), '@', 1) = '#{Multitenant::Mysql.configs.bucket.super_tenant_identifier}', tenant, SUBSTRING_INDEX(USER(), '@', 1)) = tenant"
+              view_sql += "WHERE IF(#{Multitenant::SQL.tenant_sql_fragment} = \
+                '#{Multitenant::Mysql.configs.bucket.super_tenant_identifier}',\
+                tenant, #{Multitenant::SQL.tenant_sql_fragment}) = tenant"
+
             else
-              #puts "NO IT DOESNT HAVE SUPER TENANT"
-              view_sql += 'WHERE tenant = SUBSTRING_INDEX(USER(), \'@\', 1);'
+              view_sql += "WHERE tenant = #{Multitenant::SQL.tenant_sql_fragment};"
             end
 
             #puts view_sql

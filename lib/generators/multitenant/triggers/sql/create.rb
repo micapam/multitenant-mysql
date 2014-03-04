@@ -17,7 +17,7 @@ module Multitenant
         CREATE TRIGGER #{trigger_name}
         BEFORE INSERT ON #{model.original_table_name}
         FOR EACH ROW
-        SET new.tenant = SUBSTRING_INDEX(USER(), '@', 1);
+        SET new.tenant = #{Multitenant::SQL.tenant_sql_fragment};
             )
 
             p trigger_sql
