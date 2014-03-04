@@ -12,7 +12,8 @@ module Multitenant
 
         def establish_connection_for tenant_name
           config = configs
-          config['username'] = tenant_name.blank? ? 'root' : "tenant_name#{Multitenant::SQL.username_suffix}"
+          username = "#{tenant_name}#{Multitenant::SQL.username_suffix}"
+          config['username'] = tenant_name.blank? ? 'root' : username
           ActiveRecord::Base.establish_connection(config)
         end
 
