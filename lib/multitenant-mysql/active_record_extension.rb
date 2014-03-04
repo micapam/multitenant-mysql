@@ -8,7 +8,7 @@ ActiveRecord::Base.class_eval do
         tenant_name = self.send(Multitenant::Mysql.configs.bucket_field)
         connection = Multitenant::Mysql::DB.connection
         begin
-          connection.execute "GRANT ALL PRIVILEGES ON *.* TO '#{tenant_name}'@'localhost' IDENTIFIED BY '#{password}' WITH GRANT OPTION;"
+          connection.execute "GRANT ALL PRIVILEGES ON *.* TO '#{tenant_name}#{Multitenant::SQL.username_suffix}'@'localhost' IDENTIFIED BY '#{password}' WITH GRANT OPTION;"
           connection.execute 'flush privileges;'
         rescue ActiveRecord::StatementInvalid
           puts "WARNING [multitenant-mysql]: could not create MySQL user for tenant: #{tenant_name}"
