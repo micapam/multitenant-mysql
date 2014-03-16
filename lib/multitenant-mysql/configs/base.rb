@@ -2,7 +2,7 @@ module Multitenant
   module Mysql
     module Configs
       class Base
-        attr_accessor :models, :bucket
+        attr_accessor :models, :bucket, :manual_tenant_updating
 
         def tenants_bucket(name)
           raise InvalidBucketError.new('Multitenant::Mysql: invalid bucket') if name.blank?

@@ -33,6 +33,16 @@ ActiveRecord::Base.class_eval do
             object
           end
         end
+
+        if Multitenant::Mysql.configs.manual_tenant_updating
+          self.class_eval do
+            before_create :set_tenant_to_current
+
+            def set_tenant_to_current
+              self.tenant = Multitenant::Mysql::DB.current_tenant_name
+            end
+          end
+        end
       end
     end
 
