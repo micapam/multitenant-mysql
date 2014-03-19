@@ -18,7 +18,7 @@ module Multitenant
             view_sql = %Q(
         CREATE VIEW #{view_name} AS
         SELECT #{columns}
-        FROM #{model.table_name}
+        FROM #{model.original_table_name}
             )
 
             if Multitenant::Mysql.configs.bucket.has_super_tenant_identifier?
