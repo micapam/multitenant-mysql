@@ -22,9 +22,9 @@ module Multitenant
         @method            = method
       end
 
-      def self.set_tenant(tenant_name)
+      def self.set_tenant(tenant_name, tenant_password=nil)
         return unless Tenant.exists?(tenant_name)
-        DB.establish_connection_for tenant_name
+        DB.establish_connection_for tenant_name, tenant_password
       end
 
       def execute

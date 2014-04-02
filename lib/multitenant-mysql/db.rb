@@ -10,11 +10,12 @@ module Multitenant
           @configs = configs
         end
 
-        def establish_connection_for(tenant_name)
+        def establish_connection_for(tenant_name, tenant_password=nil)
           @current_tenant_name = tenant_name
           config = configs
           username = "#{tenant_name}#{Multitenant::SQL.username_suffix}"
           config['username'] = tenant_name.blank? ? 'root' : username
+          config['password'] = tenant_password if tenant_password.present?
           ActiveRecord::Base.establish_connection(config)
         end
 
