@@ -43,6 +43,13 @@ ActiveRecord::Base.class_eval do
             end
           end
         end
+      elsif 
+        self.class_eval do 
+          unless self.respond_to? :original_table_name
+            cattr_accessor :original_table_name
+            self.original_table_name = self.table_name
+          end
+        end
       end
     end
 
